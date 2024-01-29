@@ -30,11 +30,16 @@ try {
         client.on('channelCreate', async (channel) => {
             if (channelCategories.has(channel.parentId) && channel.type == 'GUILD_TEXT') {
                 for (let i = 0; i < 3; i++) {
-                    await channel.sendSlash(botIDs, 'claim');
+                    try {
+                        for (let j = 0; j < botIDs.length; j++) {
+                            await channel.sendSlash(botIDs[j], 'claim');
+                        }
+                    } catch (e) {
+                        console.log("Warnings\n" + e)
+                    }
                 }
             }
         });
-
         client.login(config.tokens[i]);
     }
 } catch (e) {
