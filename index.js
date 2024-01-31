@@ -22,7 +22,10 @@ try {
                     const claimButton = buttons.find(b => b.customId == 'claim');
                     console.log(claimButton);
                     // await claimButton.click(message);
+                    if(claimButton) {
                     await message.clickButton('claim');
+                    console.log("Clicked on button with customID: "+claimButton.customId)
+                    }
                 }
             }
             if (message.author.id !== client.user.id) return;
@@ -32,7 +35,12 @@ try {
                 for (let i = 0; i < 3; i++) {
                     try {
                         for (let j = 0; j < botIDs.length; j++) {
+                            
+                            const isMember = channel.guild?.members.cache.has(botIDs[j]);
+                            if(isMember) {
                             await channel.sendSlash(botIDs[j], 'claim');
+                            console.log("Slash command sent in "+ channel.name);
+                            }
                         }
                     } catch (e) {
                         console.log("Warnings\n" + e)
